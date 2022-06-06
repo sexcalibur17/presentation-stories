@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 
-const StyledContainer = styled.div`
+const Wrapper = styled.div`
   display: flex;
   overflow: hidden;
   position: absolute;
@@ -11,4 +11,4 @@ const StyledContainer = styled.div`
   transition: margin-left 0.3s ease;
 `
 
-export {StyledContainer}
+export {Wrapper}

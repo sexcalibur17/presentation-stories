@@ -1,19 +1,34 @@
 import React from 'react';
 import {Wrapper} from './style';
+import {useDispatch, useSelector} from 'react-redux';
+import {addStory, editSettings} from '../../store/mainReducer';
 
 const Sidebar = (props) => {
 
-	const {setWidth, width, setStories, visible, setVisible} = props
+	const {visible, setVisible} = props
 
-	const changeHandler = (e) => {
-		setWidth(e.target.value)
-	}
 
-	const addStory = () => {
+	const dispatch = useDispatch()
+	const settings = useSelector(state => state.main.settings)
+	const stories = useSelector(state => state.main.stories)
+
+
+	const addSlide = () => {
 		const newStory = {
 			id:Date.now()
 		}
-		setStories(prev=>[...prev, newStory])
+		dispatch(addStory(newStory))
+	}
+
+	const togglePlaying = () => {
+		dispatch(editSettings('isPlaying',!settings.isPlaying))
+	}
+
+
+	const changeHandler = (e) => {
+		const propName = e.target.name
+		const value = e.target.value
+		dispatch(editSettings(propName, value))
 	}
 
 	const closeSettings = () => {
@@ -27,9 +42,18 @@ const Sidebar = (props) => {
 			</div>
 			<label>
 				width:
-				<input type='number' value={width} onChange={changeHandler}/>
+				<input name='width' type='number' value={settings.width} onChange={changeHandler}/>
 			</label>
-			<button onClick={addStory}>Add story</button>
+			<label>
+				username:
+				<input name='username' type='text' value={settings.username} onChange={changeHandler}/>
+			</label>
+			<label>
+				image:
+				<input name='imgSrc' type='text' value={settings.imgSrc} onChange={changeHandler}/>
+			</label>
+			<button onClick={addSlide}>Add story</button>
+			<button disabled={stories.length<2} onClick={togglePlaying}> {settings.isPlaying ? 'pause' : 'play'} </button>
 		</Wrapper>
 	)
 }
