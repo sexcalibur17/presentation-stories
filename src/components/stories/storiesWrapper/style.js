@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
+const gap = 20
 
 const Wrapper = styled.div`
   display: flex;
-  overflow: hidden;
+  //overflow: hidden;
   position: absolute;
   left: 50%;
-  transform: translateX(-${props => props.width/2}px);
-  margin-left: -${props => (props.current-1)*props.width}px;
+  gap: ${gap}px;
+  transform: translateX(-${props => props.width / 2 - gap}px);
+  margin-left: -${props => ((props.current - 1) * props.width) + (gap * props.current)}px;
   transition: margin-left 0.3s ease;
 `
 

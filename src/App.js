@@ -2,6 +2,7 @@ import './App.css'
 import Stories from './components/stories/storiesWrapper/Stories';
 import Sidebar from './components/sidebar/Sidebar';
 import React, {useState} from 'react';
+import Movable from './components/movable/Movable';
 
 const App = () => {
 

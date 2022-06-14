@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Wrapper} from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {addStory, editSettings} from '../../store/mainReducer';
@@ -7,15 +7,30 @@ const Sidebar = (props) => {
 
 	const {visible, setVisible} = props
 
-
 	const dispatch = useDispatch()
 	const settings = useSelector(state => state.main.settings)
 	const stories = useSelector(state => state.main.stories)
 
 
+	//image input
+	const [imgUrl, setImgUrl] = useState('')
+	const [radioValue, changeRadioValue] = useState('file')
+
+	const uploadFile = (e) => {
+		const file = e.target.files[0]
+		setImgUrl(URL.createObjectURL(file))
+	}
+
+	const onImgSrcChange = (e) => {
+		changeRadioValue(e.target.value)
+	}
+
+
+
 	const addSlide = () => {
 		const newStory = {
-			id:Date.now()
+			id:Date.now(),
+			images:[]
 		}
 		dispatch(addStory(newStory))
 	}
@@ -50,7 +65,19 @@ const Sidebar = (props) => {
 			</label>
 			<label>
 				image:
-				<input name='imgSrc' type='text' value={settings.imgSrc} onChange={changeHandler}/>
+				<fieldset>
+					<label>
+						from file
+						<input type="radio" checked={radioValue==='file'} value='file'  onChange={onImgSrcChange}/>
+					</label>
+					<label>
+						from src
+						<input type="radio" checked={radioValue==='text'} value='text' onChange={onImgSrcChange}/>
+					</label>
+					{radioValue==='file'
+						? <input name="file" type="file" onChange={uploadFile}/>
+						: <input name="imgSrc" type="text" value={settings.imgSrc} onChange={changeHandler}/>}
+				</fieldset>
 			</label>
 			<button onClick={addSlide}>Add story</button>
 			<button disabled={stories.length<2} onClick={togglePlaying}> {settings.isPlaying ? 'pause' : 'play'} </button>
@@ -58,3 +85,5 @@ const Sidebar = (props) => {
 	)
 }
 export default Sidebar
+
+//TODO fix warn on image input

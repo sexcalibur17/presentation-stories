@@ -11,6 +11,7 @@ const Wrapper = styled.aside`
   left: ${props => props.visible ? '0' : '-380px'};
   transition: left 0.5s ease;
   background-color: #808080;
+  overflow: hidden;
 `
 
 export {Wrapper}

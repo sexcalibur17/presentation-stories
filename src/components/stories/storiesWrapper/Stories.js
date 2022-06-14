@@ -18,8 +18,8 @@ const Stories = () => {
 			if (settings.isPlaying && (current < stories.length)) {
 				setCurrent(prevState => prevState + 1)
 			}
-			if (current === stories.length){
-				dispatch(editSettings('isPlaying',!settings.isPlaying))
+			if (settings.isPlaying && (current === stories.length)){
+				dispatch(editSettings('isPlaying',false))
 				setCurrent(1)
 			}
 		}, 2000)
@@ -29,13 +29,14 @@ const Stories = () => {
 		return () => {
 			clearInterval(timerId)
 		}
-	}, [isHolding, current, stories.length, settings.isPlaying])
+	}, [isHolding, current, stories.length, settings.isPlaying, dispatch])
 
 
 
 	return (
 		<Wrapper current={current} width={settings.width}>
 			{stories && stories.map((story, index) => <StoriesItem index={index}
+																   story={story}
 																   setCurrent={setCurrent}
 																   setHolding={setHolding}
 																   isCurrent={current === index + 1}
