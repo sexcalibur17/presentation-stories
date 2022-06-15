@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Wrapper} from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {addStory, editSettings} from '../../store/mainReducer';
+import ResizeTest from '../movableText/resizeTest';
 
 const Sidebar = (props) => {
 
@@ -81,6 +82,7 @@ const Sidebar = (props) => {
 			</label>
 			<button onClick={addSlide}>Add story</button>
 			<button disabled={stories.length<2} onClick={togglePlaying}> {settings.isPlaying ? 'pause' : 'play'} </button>
+			<ResizeTest/>
 		</Wrapper>
 	)
 }
